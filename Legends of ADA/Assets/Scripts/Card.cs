@@ -129,7 +129,7 @@ public class Card : MonoBehaviour
 
                                 BattleController.instance.SpendPlayerMana(manaCost);
 
-                                BattleController.instance.CalculatePoints(this);
+                                BattleController.instance.CalculatePlayerPoints(this);
                             } else
                             {
                                 ReturnToHand();
@@ -157,7 +157,7 @@ public class Card : MonoBehaviour
 
                             BattleController.instance.SpendPlayerMana(manaCost);
 
-                            BattleController.instance.CalculatePoints(this);
+                            BattleController.instance.CalculatePlayerPoints(this);
                         }
                         else
                         {
