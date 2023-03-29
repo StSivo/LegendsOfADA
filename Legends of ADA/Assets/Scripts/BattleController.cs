@@ -21,12 +21,27 @@ public class BattleController : MonoBehaviour
     public enum TurnOrder { challengePhase, playerEngage, enemyEngage, playerInvestigate,
         enemyInvestigate, playerAct, enemyAct, presentationPhase }
 
+    public string[] challengeNames = new string[] { "MC1", "MC2", "MC3", "NC1", "NCX" };
+    public string[] challengeFeatures = new string[] { "Coding", "Design", "Research", "C + D", "D + R" };
+    public int enemyScore, playerScore;
+
+    private string chosenChallenge, chosenFeature;
+
     public TurnOrder currentPhase = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         currentPlayerMaxMana = startingMana;
+
+        chosenChallenge = challengeNames[Random.Range(0, challengeNames.Length)];
+        chosenFeature = challengeFeatures[Random.Range(0, challengeFeatures.Length)];
+
+        UIController.instance.SetChallengeNameText(chosenChallenge);
+        UIController.instance.SetChallengeFeatureText(chosenFeature);
+        UIController.instance.SetEnemyScoreText(0);
+        UIController.instance.SetPlayerScoreText(0);
+        UIController.instance.UpdateScoreMupltiplierText(1f);
 
         FillPlayerMana();
 
@@ -39,6 +54,81 @@ public class BattleController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             AdvanceTurn();
+        }
+    }
+
+    public void CalculatePoints(Card card)
+    {
+        float actualProcessValue = card.processValue - 1;
+
+        switch (chosenFeature)
+        {
+            case "Coding":
+
+                if (card.cardFaction == "Coding")
+                {
+                    UIController.instance.UpdatePlayerScoreText(card.codingValue * 2, actualProcessValue);
+                } else
+                {
+                    UIController.instance.UpdatePlayerScoreText(card.codingValue, actualProcessValue);
+                }
+                break;
+
+            case "Design":
+
+                if (card.cardFaction == "Design")
+                {
+                    UIController.instance.UpdatePlayerScoreText(card.designValue * 2, actualProcessValue);
+                }
+                else
+                {
+                    UIController.instance.UpdatePlayerScoreText(card.designValue, actualProcessValue);
+                }
+                break;
+
+            case "Research":
+
+                if (card.cardFaction == "Research")
+                {
+                    UIController.instance.UpdatePlayerScoreText(card.researchValue * 2, actualProcessValue);
+                }
+                else
+                {
+                    UIController.instance.UpdatePlayerScoreText(card.researchValue, actualProcessValue);
+                }
+                break;
+
+            case "C + D":
+
+                if (card.cardFaction == "Coding")
+                {
+                    UIController.instance.UpdatePlayerScoreText((card.codingValue * 2) + card.designValue, actualProcessValue);
+                }
+                else if (card.cardFaction == "Design")
+                {
+                    UIController.instance.UpdatePlayerScoreText((card.designValue * 2) + card.codingValue, actualProcessValue);
+                }
+                else
+                {
+                    UIController.instance.UpdatePlayerScoreText(card.designValue + card.codingValue, actualProcessValue);
+                }
+                break;
+
+            case "D + R":
+
+                if (card.cardFaction == "Research")
+                {
+                    UIController.instance.UpdatePlayerScoreText((card.researchValue * 2) + card.designValue, actualProcessValue);
+                }
+                else if (card.cardFaction == "Design")
+                {
+                    UIController.instance.UpdatePlayerScoreText((card.designValue * 2) + card.researchValue, actualProcessValue);
+                } else
+                {
+                    UIController.instance.UpdatePlayerScoreText(card.designValue + card.researchValue, actualProcessValue);
+                }
+                break;
+
         }
     }
 
@@ -62,7 +152,7 @@ public class BattleController : MonoBehaviour
 
     public void AdvanceTurn()
     {
-        Debug.Log((int)currentPhase);
+        
         currentPhase++;
         if((int)currentPhase >= System.Enum.GetValues(typeof(TurnOrder)).Length)
         {
@@ -73,7 +163,13 @@ public class BattleController : MonoBehaviour
         {
             case TurnOrder.challengePhase:
 
-                AdvanceTurn();
+                chosenChallenge = challengeNames[Random.Range(0, challengeNames.Length)];
+                chosenFeature = challengeFeatures[Random.Range(0, challengeFeatures.Length)];
+
+                UIController.instance.SetChallengeNameText(chosenChallenge);
+                UIController.instance.SetChallengeFeatureText(chosenFeature);
+                UIController.instance.SetEnemyScoreText(0);
+                UIController.instance.SetPlayerScoreText(0);
 
                 break;
 
@@ -87,9 +183,6 @@ public class BattleController : MonoBehaviour
                 }
 
                 FillPlayerMana();
-                Debug.Log("card per turn: " + cardToDrawPerTurn);
-                Debug.Log("held cards" + HandController.instance.heldCards.Count);
-                Debug.Log(cardToDrawPerTurn - HandController.instance.heldCards.Count);
                 DeckController.instance.DrawMultipleCards(8 - HandController.instance.heldCards.Count);
 
                 break;
@@ -119,8 +212,19 @@ public class BattleController : MonoBehaviour
                 break;
 
             case TurnOrder.presentationPhase:
+                if (UIController.instance.enemyTotalScore > UIController.instance.playerTotalScore)
+                {
+                    Debug.Log("HAI PERSO");
 
-                break;
+                } else if (UIController.instance.enemyTotalScore < UIController.instance.playerTotalScore)
+                {
+                    Debug.Log("HAI VINTO");
+                }
+                else
+                {
+                    Debug.Log("PAREGGIO");
+                }
+                    break;
         }
     }
 

@@ -6,4 +6,6 @@ public class CardPlacePoint : MonoBehaviour
 {
     public Card activeCard;
     public bool isPlayerPoint;
+    public bool isMentorPoint;
+    public bool isBonusPoint;
 }

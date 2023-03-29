@@ -7,6 +7,10 @@ public class CardScriptableObject : ScriptableObject
 {
     public string cardName;
 
+    public string cardFaction;
+
+    public string cardType;
+
     [TextArea]
     public string actionDescription, cardLore;
 

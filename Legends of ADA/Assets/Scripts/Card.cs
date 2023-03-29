@@ -8,6 +8,8 @@ public class Card : MonoBehaviour
 {
     public CardScriptableObject cardSO;
 
+    public string cardFaction, cardType;
+
     public bool isPlayer;
 
     public int codingValue, designValue, researchValue, manaCost;
@@ -60,6 +62,8 @@ public class Card : MonoBehaviour
         researchValue = cardSO.researchValue;
         processValue = cardSO.processValue;
         manaCost = cardSO.manaCost;
+        cardFaction = cardSO.cardFaction;
+        cardType = cardSO.cardType;
 
         codingText.text = codingValue.ToString();
         designText.text = designValue.ToString();
@@ -105,14 +109,46 @@ public class Card : MonoBehaviour
                 {
                     CardPlacePoint selectedPoint = hit.collider.GetComponent<CardPlacePoint>();
 
-                    if(selectedPoint.activeCard == null && selectedPoint.isPlayerPoint)
+                    if (selectedPoint.activeCard == null && selectedPoint.isPlayerPoint)
+                    {
+                        if ((selectedPoint.isMentorPoint && cardType == "Mentor") ||
+                            (selectedPoint.isBonusPoint && cardType == "Bonus") ||
+                            (!selectedPoint.isMentorPoint && !selectedPoint.isBonusPoint && cardType == "Student"))
+                        {
+                            if (BattleController.instance.playerMana >= manaCost)
+                            {
+                                selectedPoint.activeCard = this;
+                                assignedPlace = selectedPoint;
+
+                                MoveToPoint(selectedPoint.transform.position, Quaternion.identity);
+
+                                inHand = false;
+                                isSelected = false;
+
+                                HC.RemoveFromHand(this);
+
+                                BattleController.instance.SpendPlayerMana(manaCost);
+
+                                BattleController.instance.CalculatePoints(this);
+                            } else
+                            {
+                                ReturnToHand();
+                                UIController.instance.ShowManaWarning();
+                            }
+                        } else
+                        {
+                            ReturnToHand();
+                        }
+                    } else if (selectedPoint.activeCard != null && selectedPoint.isBonusPoint && cardType == "Bonus")
                     {
                         if (BattleController.instance.playerMana >= manaCost)
-                        { 
+                        {
                             selectedPoint.activeCard = this;
                             assignedPlace = selectedPoint;
+                            Vector3 bonusPosition = selectedPoint.transform.position;
+                            bonusPosition.y = (float)(bonusPosition.y + 0.01);
 
-                            MoveToPoint(selectedPoint.transform.position, Quaternion.identity);
+                            MoveToPoint(bonusPosition, Quaternion.identity);
 
                             inHand = false;
                             isSelected = false;
@@ -120,7 +156,10 @@ public class Card : MonoBehaviour
                             HC.RemoveFromHand(this);
 
                             BattleController.instance.SpendPlayerMana(manaCost);
-                        } else
+
+                            BattleController.instance.CalculatePoints(this);
+                        }
+                        else
                         {
                             ReturnToHand();
                             UIController.instance.ShowManaWarning();

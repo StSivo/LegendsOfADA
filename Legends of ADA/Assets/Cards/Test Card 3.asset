@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Test Card 3
   m_EditorClassIdentifier: 
   cardName: Test Card 3
+  cardFaction: Research
+  cardType: Student
   actionDescription: Lorem ipsum dolor sit amet, consectetur adipiscing elit
   cardLore: Lore lore lore lore ...
   codingValue: 4
