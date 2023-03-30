@@ -230,13 +230,13 @@ public class BattleController : MonoBehaviour
         {
             enemyMana = 0;
         }
-        UIController.instance.SetPlayerManaText(enemyMana);
+        UIController.instance.SetEnemyManaText(enemyMana);
     }
 
     public void FillPlayerMana()
     {
         playerMana = currentPlayerMaxMana;
-        UIController.instance.SetEnemyManaText(playerMana);
+        UIController.instance.SetPlayerManaText(playerMana);
     }
 
     public void FillEnemyMana()
@@ -279,7 +279,6 @@ public class BattleController : MonoBehaviour
                 }
 
                 FillPlayerMana();
-                FillEnemyMana();
                 DeckController.instance.DrawMultipleCards(8 - HandController.instance.heldCards.Count);
 
                 break;
@@ -292,7 +291,6 @@ public class BattleController : MonoBehaviour
                 }
 
                 FillEnemyMana();
-
                 EnemyController.instance.StartAction();
                 break;
 
@@ -303,7 +301,7 @@ public class BattleController : MonoBehaviour
                 break;
 
             case TurnOrder.enemyInvestigate:
-
+                EnemyController.instance.StartAction();
                 break;
 
             case TurnOrder.playerAct:
@@ -313,6 +311,7 @@ public class BattleController : MonoBehaviour
                 break;
 
             case TurnOrder.enemyAct:
+                EnemyController.instance.StartAction();
 
                 break;
 
