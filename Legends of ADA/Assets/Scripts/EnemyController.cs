@@ -60,17 +60,11 @@ public class EnemyController : MonoBehaviour
     }
 
     public void StartAction()
-    {
-        StartCoroutine(EnemyActionCo());
-    }
-
-    IEnumerator EnemyActionCo()
-    {
+    { 
         if (activeCards.Count == 0)
         {
             SetUpDeck();
         }
-        yield return new WaitForSeconds(.5f);
         if (enemyAIType != AIType.placeFromDesk)
         {
             for (int i = 0; i < BattleController.instance.cardToDrawPerTurn; i++)
@@ -96,7 +90,7 @@ public class EnemyController : MonoBehaviour
 
         CardScriptableObject selectedCard = null;
 
-
+        
         switch (enemyAIType)
         {
             case AIType.placeFromDesk:
@@ -115,41 +109,21 @@ public class EnemyController : MonoBehaviour
                 selectedCard = SelectedCardToPlay();
                 while (selectedCard != null && selectedPoint.activeCard == null)
                 {
-                    while ((!selectedPoint.isMentorPoint && selectedCard.cardType == "Mentor") ||
-                            (!selectedPoint.isBonusPoint && selectedCard.cardType == "Bonus") ||
-                            (selectedPoint.isMentorPoint && selectedPoint.isBonusPoint && selectedCard.cardType == "Student"))
+                    if ((selectedPoint.isMentorPoint && selectedCard.cardType == "Mentor") ||
+                            (selectedPoint.isBonusPoint && selectedCard.cardType == "Bonus") ||
+                            (!selectedPoint.isMentorPoint && !selectedPoint.isBonusPoint && selectedCard.cardType == "Student"))
                     {
-                        selectedPoint = chooseSelectPoint(selectedPoint, cardPoints);
-
-                        //} else
-                        //if ((selectedPoint.isMentorPoint && selectedCard.cardType == "Mentor") ||
-                        //        (selectedPoint.isBonusPoint && selectedCard.cardType == "Bonus") ||
-                        //        (!selectedPoint.isMentorPoint && !selectedPoint.isBonusPoint && selectedCard.cardType == "Student"))
-                        //{
-                        //    PlayCard(selectedCard, selectedPoint);
-                        //    BattleController.instance.CalculateEnemyPoints(selectedPoint.activeCard);
-                        //} else
-                        //{
-                        //    randomPoint = Random.Range(0, cardPoints.Count);
-                        //    selectedPoint = cardPoints[randomPoint];
-                        //    cardPoints.RemoveAt(randomPoint);
-
-                        //    PlayCard(selectedCard, selectedPoint);
-                        //    BattleController.instance.CalculateEnemyPoints(selectedPoint.activeCard);
-                        //}
+                        PlayCard(selectedCard, selectedPoint);
+                        BattleController.instance.CalculateEnemyPoints(selectedPoint.activeCard);
 
                     }
-                    PlayCard(selectedCard, selectedPoint);
-                    BattleController.instance.CalculateEnemyPoints(selectedPoint.activeCard);
-
+                   
                     selectedCard = SelectedCardToPlay();
 
                 }
                 break;
 
         }
-          
-        yield return new WaitForSeconds(.5f);
         BattleController.instance.AdvanceTurn();
     }
 

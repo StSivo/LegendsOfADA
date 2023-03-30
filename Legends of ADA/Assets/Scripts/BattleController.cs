@@ -312,7 +312,6 @@ public class BattleController : MonoBehaviour
 
             case TurnOrder.enemyAct:
                 EnemyController.instance.StartAction();
-
                 break;
 
             case TurnOrder.presentationPhase:
