@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class UIController : MonoBehaviour
         instance = this;
     }
 
-    public TMP_Text playerManaText, scoreMultiplierText;
+    public GameObject challengeScreen, finalScreen;
+
+    public TMP_Text playerManaText, scoreMultiplierText, finalText, challengeText;
 
     public TMP_Text challengeNameText, challengeFeatureText, enemyScoreText, playerScoreText;
 
@@ -46,6 +49,28 @@ public class UIController : MonoBehaviour
                 manaWarning.SetActive(false);
             }
         }
+    }
+
+    public void ShowChallengeScreen(string challenge, string feature)
+    {
+        challengeText.text = challenge + "\n" + feature;
+        challengeScreen.SetActive(true);
+    }
+
+    public void HideChallengeScreen()
+    {
+        challengeScreen.SetActive(false);
+    }
+
+    public void ShowFinalScreen(string result)
+    {
+        finalText.text = result;
+        finalScreen.SetActive(true);
+    }
+
+    public void HideFinalScreen()
+    {
+        finalScreen.SetActive(false);
     }
 
     public void UpdateEnemyScoreText(int enemyScore, float enemyMultiplier)

@@ -41,9 +41,13 @@ public class Card : MonoBehaviour
 
     public CardPlacePoint assignedPlace;
 
+    public Material[] materials;
+
+
     // Start is called before the first frame update
     void Start()
     {
+
         if (targetPoint == Vector3.zero)
         {
             targetPoint = transform.position;
@@ -53,6 +57,25 @@ public class Card : MonoBehaviour
         SetupCard();
         HC = FindObjectOfType<HandController>();
         col = GetComponent<Collider>();
+
+        Renderer r = GetComponentInChildren<Renderer>();
+        Material[] mat = r.materials;
+
+        if (this.cardType == "Mentor")
+        {
+            mat[1] = materials[0];
+        }
+        else if (this.cardType == "Bonus")
+        {
+            mat[1] = materials[1];
+        }
+        else
+        {
+            mat[1] = materials[2];
+        }
+
+        r.materials = mat;
+
     }
 
     public void SetupCard()
@@ -65,15 +88,26 @@ public class Card : MonoBehaviour
         cardFaction = cardSO.cardFaction;
         cardType = cardSO.cardType;
 
-        codingText.text = codingValue.ToString();
-        designText.text = designValue.ToString();
-        researchText.text = researchValue.ToString();
-        processText.text = processValue.ToString();
-        manaCostText.text = cardSO.manaCost.ToString();
+        if (this.cardType == "Mentor")
+        {
+            codingText.text = "+" + codingValue.ToString();
+            designText.text = "+" + designValue.ToString();
+            researchText.text = "+" + researchValue.ToString();
+            processText.text = "x" + processValue.ToString();
+            loreText.text = cardSO.cardLore;
+        }
+        else
+        {
+            codingText.text = codingValue.ToString();
+            designText.text = designValue.ToString();
+            researchText.text = researchValue.ToString();
+            processText.text = "x" + processValue.ToString();
+            loreText.text = "Mentor: " + cardSO.cardLore;
+        }
 
+        manaCostText.text = manaCost.ToString();
         nameText.text = cardSO.cardName;
         actionDescriptionText.text = cardSO.actionDescription;
-        loreText.text = cardSO.cardLore;
 
         characterArt.sprite = cardSO.characterSprite;
         factionArt.sprite = cardSO.factionSprite;
@@ -128,8 +162,29 @@ public class Card : MonoBehaviour
                                 HC.RemoveFromHand(this);
 
                                 BattleController.instance.SpendPlayerMana(manaCost);
+                                Debug.Log(cardType);
+
+                                BattleController.instance.placedCards.Add(this);
+
+                                if (this.cardType == "Student")
+                                {
+                                    foreach (var card in BattleController.instance.placedCards)
+                                    {
+                                        if (card.cardType == "Mentor")
+                                        {
+                                            UpdateSingleCardStats(card);
+                                        }
+                                    }
+                                }
+
+                                if (cardType == "Mentor")
+                                {
+                                    Debug.Log("ENTERED");
+                                    UpdatePlacedCardsStats(this, ref BattleController.instance.placedCards);
+                                }
 
                                 BattleController.instance.CalculatePoints(this);
+
                             } else
                             {
                                 ReturnToHand();
@@ -175,6 +230,63 @@ public class Card : MonoBehaviour
             }
         }
         justPressed = false;
+    }
+
+    public void UpdatePlacedCardsStats(Card placedMentorCard, ref List<Card> placedCards)
+    {
+        int bonusCodingValue = placedMentorCard.codingValue;
+        int bonusDesignValue = placedMentorCard.designValue;
+        int bonusResearchValue = placedMentorCard.researchValue;
+
+        foreach (var card in placedCards)
+        {
+            if (card.cardType == "Student")
+            {
+                if (cardSO.cardLore == placedMentorCard.nameText.text)
+                {
+                    bonusCodingValue *= 2;
+                    bonusDesignValue *= 2;
+                    bonusResearchValue *= 2;
+                }
+                Debug.Log(bonusCodingValue + " " + bonusDesignValue + " " + bonusResearchValue);
+                Debug.Log(card.codingValue + " " + card.designValue + " " + card.researchValue);
+                card.codingValue += bonusCodingValue;
+                card.designValue += bonusDesignValue;
+                card.researchValue += bonusResearchValue;
+
+                Debug.Log(card.codingValue + " " + card.designValue + " " + card.researchValue);
+
+                card.codingText.text = card.codingValue.ToString();
+                card.designText.text = card.designValue.ToString();
+                card.researchText.text = card.researchValue.ToString();
+            }
+        }
+    }
+
+    public void UpdateSingleCardStats(Card placedMentorCard)
+    {
+        int bonusCodingValue = placedMentorCard.codingValue;
+        int bonusDesignValue = placedMentorCard.designValue;
+        int bonusResearchValue = placedMentorCard.researchValue;
+
+        if (cardSO.cardLore == placedMentorCard.nameText.text)
+        {
+            bonusCodingValue *= 2;
+            bonusDesignValue *= 2;
+            bonusResearchValue *= 2;
+        }
+
+        Debug.Log(bonusCodingValue + " " + bonusDesignValue + " " + bonusResearchValue);
+        Debug.Log(this.codingValue + " " + this.designValue + " " + this.researchValue);
+        this.codingValue += bonusCodingValue;
+        this.designValue += bonusDesignValue;
+        this.researchValue += bonusResearchValue;
+
+        Debug.Log(this.codingValue + " " + this.designValue + " " + this.researchValue);
+
+        this.codingText.text = this.codingValue.ToString();
+        this.designText.text = this.designValue.ToString();
+        this.researchText.text = this.researchValue.ToString();
     }
 
     public void MoveToPoint(Vector3 pointToMoveTo, Quaternion rotToMatch)
