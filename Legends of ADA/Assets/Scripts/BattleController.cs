@@ -14,8 +14,8 @@ public class BattleController : MonoBehaviour
     }
 
     public int startingMana = 7, maxMana = 15;
-    public int playerMana;
-    public int currentPlayerMaxMana;
+    public int enemyMana, playerMana;
+    public int currentEnemyMaxMana, currentPlayerMaxMana;
 
     public int startingCardsAmount = 8;
     public int cardToDrawPerTurn = 8; //we want the player to always have 8 cards
@@ -46,6 +46,7 @@ public class BattleController : MonoBehaviour
     private void InitializeGame()
     {
         currentPlayerMaxMana = startingMana;
+        currentEnemyMaxMana = startingMana;
 
         chosenChallenge = challengeNames[challengeNumber];
         chosenFeature = challengeFeatures[Random.Range(0, challengeFeatures.Length)];
@@ -61,7 +62,7 @@ public class BattleController : MonoBehaviour
         UIController.instance.UpdateScoreMupltiplierText(1f);
 
         FillPlayerMana();
-
+        FillEnemyMana();
         DeckController.instance.DrawMultipleCards(startingCardsAmount);
     }
 
@@ -156,6 +157,94 @@ public class BattleController : MonoBehaviour
         }
     }
 
+    public void CalculateEnemyPoints(Card card)
+    {
+        float actualProcessValue = card.processValue - 1;
+
+        switch (chosenFeature)
+        {
+            case "Coding":
+
+                if (card.cardFaction == "Coding")
+                {
+                    UIController.instance.UpdateEnemyScoreText(card.codingValue * 2, actualProcessValue);
+                }
+                else
+                {
+                    UIController.instance.UpdateEnemyScoreText(card.codingValue, actualProcessValue);
+                }
+                break;
+
+            case "Design":
+
+                if (card.cardFaction == "Design")
+                {
+                    UIController.instance.UpdateEnemyScoreText(card.designValue * 2, actualProcessValue);
+                }
+                else
+                {
+                    UIController.instance.UpdateEnemyScoreText(card.designValue, actualProcessValue);
+                }
+                break;
+
+            case "Research":
+
+                if (card.cardFaction == "Research")
+                {
+                    UIController.instance.UpdateEnemyScoreText(card.researchValue * 2, actualProcessValue);
+                }
+                else
+                {
+                    UIController.instance.UpdateEnemyScoreText(card.researchValue, actualProcessValue);
+                }
+                break;
+
+            case "C + D":
+
+                if (card.cardFaction == "Coding")
+                {
+                    UIController.instance.UpdateEnemyScoreText((card.codingValue * 2) + card.designValue, actualProcessValue);
+                }
+                else if (card.cardFaction == "Design")
+                {
+                    UIController.instance.UpdateEnemyScoreText((card.designValue * 2) + card.codingValue, actualProcessValue);
+                }
+                else
+                {
+                    UIController.instance.UpdateEnemyScoreText(card.designValue + card.codingValue, actualProcessValue);
+                }
+                break;
+
+            case "D + R":
+
+                if (card.cardFaction == "Research")
+                {
+                    UIController.instance.UpdateEnemyScoreText((card.researchValue * 2) + card.designValue, actualProcessValue);
+                }
+                else if (card.cardFaction == "Design")
+                {
+                    UIController.instance.UpdateEnemyScoreText((card.designValue * 2) + card.researchValue, actualProcessValue);
+                }
+                else
+                {
+                    UIController.instance.UpdateEnemyScoreText(card.designValue + card.researchValue, actualProcessValue);
+                }
+                break;
+
+        }
+    }
+
+    public void SpendEnemyMana(int amountToSpend)
+    {
+        enemyMana -= amountToSpend;
+
+        if (enemyMana < 0)
+        {
+            enemyMana = 0;
+        }
+        UIController.instance.SetEnemyManaText(enemyMana);
+    }
+
     public void SpendPlayerMana(int amountToSpend)
     {
         playerMana -= amountToSpend;
@@ -172,6 +261,12 @@ public class BattleController : MonoBehaviour
     {
         playerMana = currentPlayerMaxMana;
         UIController.instance.SetManaText(playerMana);
+    }
+
+    public void FillEnemyMana()
+    {
+        enemyMana = currentEnemyMaxMana;
+        UIController.instance.SetEnemyManaText(enemyMana);
     }
 
     public void AdvanceTurn()
@@ -215,7 +310,13 @@ public class BattleController : MonoBehaviour
 
                         Destroy(card, 5f);
                     }
-                    
+                    foreach (var card in EnemyController.instance.placedCards)
+                    {
+                        card.MoveToPoint(discardPoint.position, discardPoint.rotation);
+
+                        Destroy(card, 5f);
+                    }
+
                 }
 
                 if (challengeNumber < challengeNames.Length)
@@ -251,6 +352,15 @@ public class BattleController : MonoBehaviour
 
             case TurnOrder.enemyEngage:
 
+                if (currentEnemyMaxMana < maxMana)
+                {
+                    currentEnemyMaxMana++;
+                }
+
+                FillEnemyMana();
+                EnemyController.instance.StartAction();
+                EnemyController.instance.StartAction();
+                EnemyController.instance.StartAction();
                 break;
 
             case TurnOrder.playerInvestigate:

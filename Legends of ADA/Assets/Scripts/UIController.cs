@@ -16,7 +16,7 @@ public class UIController : MonoBehaviour
 
     public GameObject challengeScreen, finalScreen;
 
-    public TMP_Text playerManaText, scoreMultiplierText, finalText, challengeText;
+    public TMP_Text enemyManaText, playerManaText, scoreMultiplierText, finalText, challengeText;
 
     public TMP_Text challengeNameText, challengeFeatureText, enemyScoreText, playerScoreText;
 
@@ -124,6 +124,10 @@ public class UIController : MonoBehaviour
     public void SetManaText(int manaAmount)
     {
         playerManaText.text = "Mana: " + manaAmount;
+    }
+    public void SetEnemyManaText(int manaAmount)
+    {
+        enemyManaText.text = "Enemy Mana: " + manaAmount;
     }
 
     public void UpdateScoreMupltiplierText(float scoreMultiplier)
