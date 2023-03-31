@@ -13,7 +13,11 @@ public class BattleController : MonoBehaviour
         instance = this;
     }
 
+<<<<<<< HEAD
     public int startingMana = 7, maxMana = 15;
+=======
+    public int startingMana = 4, maxMana = 12;
+>>>>>>> main
     public int enemyMana, playerMana;
     public int currentEnemyMaxMana, currentPlayerMaxMana;
 
@@ -40,8 +44,13 @@ public class BattleController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+<<<<<<< HEAD
         InitializeGame();
     }
+=======
+        currentPlayerMaxMana = startingMana;
+        currentEnemyMaxMana = startingMana;
+>>>>>>> main
 
     private void InitializeGame()
     {
@@ -75,6 +84,7 @@ public class BattleController : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     public void CaluclateMentorBonusPoints(Card mentor)
     {
         float actualProcessValue = mentor.processValue - 1;
@@ -83,6 +93,9 @@ public class BattleController : MonoBehaviour
     }
 
     public void CalculatePoints(Card card)
+=======
+    public void CalculatePlayerPoints(Card card)
+>>>>>>> main
     {
         float actualProcessValue = card.processValue - 1;
 
@@ -234,6 +247,7 @@ public class BattleController : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     public void SpendEnemyMana(int amountToSpend)
     {
         enemyMana -= amountToSpend;
@@ -245,6 +259,8 @@ public class BattleController : MonoBehaviour
         UIController.instance.SetEnemyManaText(enemyMana);
     }
 
+=======
+>>>>>>> main
     public void SpendPlayerMana(int amountToSpend)
     {
         playerMana -= amountToSpend;
@@ -254,13 +270,31 @@ public class BattleController : MonoBehaviour
             playerMana = 0;
         }
 
-        UIController.instance.SetManaText(playerMana);
+        UIController.instance.SetPlayerManaText(playerMana);
+    }
+
+    public void SpendEnemyMana(int amountToSpend)
+    {
+        enemyMana -= amountToSpend;
+
+        if (enemyMana < 0)
+        {
+            enemyMana = 0;
+        }
+        UIController.instance.SetEnemyManaText(enemyMana);
     }
 
     public void FillPlayerMana()
     {
         playerMana = currentPlayerMaxMana;
-        UIController.instance.SetManaText(playerMana);
+        UIController.instance.SetPlayerManaText(playerMana);
+    }
+
+    public void FillEnemyMana()
+    {
+        enemyMana = currentEnemyMaxMana;
+        UIController.instance.SetEnemyManaText(enemyMana);
+
     }
 
     public void FillEnemyMana()
@@ -359,8 +393,11 @@ public class BattleController : MonoBehaviour
 
                 FillEnemyMana();
                 EnemyController.instance.StartAction();
+<<<<<<< HEAD
                 EnemyController.instance.StartAction();
                 EnemyController.instance.StartAction();
+=======
+>>>>>>> main
                 break;
 
             case TurnOrder.playerInvestigate:
@@ -370,7 +407,7 @@ public class BattleController : MonoBehaviour
                 break;
 
             case TurnOrder.enemyInvestigate:
-
+                EnemyController.instance.StartAction();
                 break;
 
             case TurnOrder.playerAct:
@@ -380,7 +417,7 @@ public class BattleController : MonoBehaviour
                 break;
 
             case TurnOrder.enemyAct:
-
+                EnemyController.instance.StartAction();
                 break;
 
             case TurnOrder.presentationPhase:

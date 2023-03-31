@@ -14,9 +14,13 @@ public class UIController : MonoBehaviour
         instance = this;
     }
 
+<<<<<<< HEAD
     public GameObject challengeScreen, finalScreen;
 
     public TMP_Text enemyManaText, playerManaText, scoreMultiplierText, finalText, challengeText;
+=======
+    public TMP_Text playerManaText, enemyManaText, scoreMultiplierText;
+>>>>>>> main
 
     public TMP_Text challengeNameText, challengeFeatureText, enemyScoreText, playerScoreText;
 
@@ -121,10 +125,15 @@ public class UIController : MonoBehaviour
         enemyScoreText.text = "Enemy: " + enemyTotalScore.ToString();
     }
 
-    public void SetManaText(int manaAmount)
+    public void SetPlayerManaText(int manaAmount)
     {
         playerManaText.text = "Mana: " + manaAmount;
     }
+    public void SetEnemyManaText(int manaAmount)
+    {
+        enemyManaText.text = "Enemy Mana: " + manaAmount;
+    }
+
     public void SetEnemyManaText(int manaAmount)
     {
         enemyManaText.text = "Enemy Mana: " + manaAmount;
