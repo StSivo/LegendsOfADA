@@ -22,7 +22,13 @@ public class EnemyController : MonoBehaviour
 
 
     public Card cardToSpawn;
+<<<<<<< HEAD
+    public List<Card> placedCards = new List<Card>();
     public Transform cardSpawnPoint;
+    private int iterations = 0; 
+=======
+    public Transform cardSpawnPoint;
+>>>>>>> main
     // Start is called before the first frame update
     void Start()
     {
@@ -109,6 +115,27 @@ public class EnemyController : MonoBehaviour
                 selectedCard = SelectedCardToPlay();
                 while (selectedCard != null && selectedPoint.activeCard == null)
                 {
+<<<<<<< HEAD
+                    if (iterations < 6)
+                    {
+                        if ((selectedPoint.isMentorPoint && selectedCard.cardType == "Mentor") ||
+                                (selectedPoint.isBonusPoint && selectedCard.cardType == "Bonus") ||
+                                (!selectedPoint.isMentorPoint && !selectedPoint.isBonusPoint && selectedCard.cardType == "Student"))
+                        {
+                            PlayCard(selectedCard, selectedPoint);
+                            BattleController.instance.CalculateEnemyPoints(selectedPoint.activeCard);
+
+                        }
+                        iterations++;
+                        selectedCard = SelectedCardToPlay();
+                    }
+                    else
+                    {
+                        selectedCard = null;
+                    }
+                }
+                iterations = 0;
+=======
                     if ((selectedPoint.isMentorPoint && selectedCard.cardType == "Mentor") ||
                             (selectedPoint.isBonusPoint && selectedCard.cardType == "Bonus") ||
                             (!selectedPoint.isMentorPoint && !selectedPoint.isBonusPoint && selectedCard.cardType == "Student"))
@@ -121,6 +148,7 @@ public class EnemyController : MonoBehaviour
                     selectedCard = SelectedCardToPlay();
 
                 }
+>>>>>>> main
                 break;
 
         }
@@ -157,12 +185,21 @@ public class EnemyController : MonoBehaviour
         newCard.cardSO = cardSO;
         newCard.SetupCard();
         newCard.MoveToPoint(placePoint.transform.position, placePoint.transform.rotation);
+<<<<<<< HEAD
+        
+
+        placePoint.activeCard = newCard;
+        newCard.assignedPlace = placePoint;
+        placedCards.Add(newCard);
+        cardsInHand.Remove(cardSO);
+=======
 
         placePoint.activeCard = newCard;
         newCard.assignedPlace = placePoint;
 
         cardsInHand.Remove(cardSO);
 
+>>>>>>> main
         BattleController.instance.SpendEnemyMana(cardSO.manaCost);
     }
 

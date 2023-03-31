@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -13,7 +14,13 @@ public class UIController : MonoBehaviour
         instance = this;
     }
 
+<<<<<<< HEAD
+    public GameObject challengeScreen, finalScreen;
+
+    public TMP_Text enemyManaText, playerManaText, scoreMultiplierText, finalText, challengeText;
+=======
     public TMP_Text playerManaText, enemyManaText, scoreMultiplierText;
+>>>>>>> main
 
     public TMP_Text challengeNameText, challengeFeatureText, enemyScoreText, playerScoreText;
 
@@ -46,6 +53,28 @@ public class UIController : MonoBehaviour
                 manaWarning.SetActive(false);
             }
         }
+    }
+
+    public void ShowChallengeScreen(string challenge, string feature)
+    {
+        challengeText.text = challenge + "\n" + feature;
+        challengeScreen.SetActive(true);
+    }
+
+    public void HideChallengeScreen()
+    {
+        challengeScreen.SetActive(false);
+    }
+
+    public void ShowFinalScreen(string result)
+    {
+        finalText.text = result;
+        finalScreen.SetActive(true);
+    }
+
+    public void HideFinalScreen()
+    {
+        finalScreen.SetActive(false);
     }
 
     public void UpdateEnemyScoreText(int enemyScore, float enemyMultiplier)
@@ -99,6 +128,10 @@ public class UIController : MonoBehaviour
     public void SetPlayerManaText(int manaAmount)
     {
         playerManaText.text = "Mana: " + manaAmount;
+    }
+    public void SetEnemyManaText(int manaAmount)
+    {
+        enemyManaText.text = "Enemy Mana: " + manaAmount;
     }
 
     public void SetEnemyManaText(int manaAmount)

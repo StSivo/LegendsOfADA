@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe9b04afb11349bcb9e06a43db63988, type: 3}
+  m_Name: Domenico Trotta
+  m_EditorClassIdentifier: 
+  cardName: Domenico Trotta
+  cardFaction: Coding
+  cardType: Student
+  actionDescription: 
+  cardLore: Pasquale
+  codingValue: 5
+  designValue: 7
+  researchValue: 10
+  manaCost: 4
+  processValue: 1.5
+  characterSprite: {fileID: 21300000, guid: 6c3bd287d0b5747e7bbff332d94e6e32, type: 3}
+  factionSprite: {fileID: 21300000, guid: 788e73aa869bf49c9ae4a84cf7f2427c, type: 3}

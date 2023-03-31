@@ -173,9 +173,9 @@ MonoBehaviour:
   m_fontSize: 20
   m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 15
+  m_fontSizeMax: 20
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -480,9 +480,9 @@ MonoBehaviour:
   m_fontSize: 20
   m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 15
+  m_fontSizeMax: 20
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -709,9 +709,9 @@ MonoBehaviour:
   m_fontSize: 20
   m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 15
+  m_fontSizeMax: 20
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1182,7 +1182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3bd0210dde047918a92e0bcff2c4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSO: {fileID: 11400000, guid: 8bad42f02f21e4fed85b66031b2cc183, type: 2}
+  cardSO: {fileID: 11400000, guid: e561616cc87f749298a41cd016bc73a6, type: 2}
+  cardFaction: 
+  cardType: 
   isPlayer: 1
   codingValue: 0
   designValue: 0
@@ -1211,6 +1213,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   assignedPlace: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: a5f0f55354e58fb498b6f0beaed8e485, type: 2}
+  - {fileID: 2100000, guid: 5afaa2003430e4b8fb76fef2f3121f37, type: 2}
+  - {fileID: 2100000, guid: 6c2369de39d2f49028e60069009fc162, type: 2}
 --- !u!65 &3190970709972723882
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1531,7 +1537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.91, y: -0.00005722046}
+  m_AnchoredPosition: {x: -1.91, y: -47}
   m_SizeDelta: {x: 330, y: 330}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3190970710198806779
@@ -1669,9 +1675,9 @@ MonoBehaviour:
   m_fontSize: 20
   m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 15
+  m_fontSizeMax: 20
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

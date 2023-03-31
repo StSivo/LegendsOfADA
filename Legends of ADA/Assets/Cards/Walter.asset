@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe9b04afb11349bcb9e06a43db63988, type: 3}
+  m_Name: Walter
+  m_EditorClassIdentifier: 
+  cardName: Walter
+  cardFaction: Coding
+  cardType: Student
+  actionDescription: 
+  cardLore: Domenico DL
+  codingValue: 8
+  designValue: 4
+  researchValue: 7
+  manaCost: 4
+  processValue: 1.4
+  characterSprite: {fileID: 21300000, guid: 56ccd8f7114c14b049b886919ae1abbf, type: 3}
+  factionSprite: {fileID: 21300000, guid: 788e73aa869bf49c9ae4a84cf7f2427c, type: 3}

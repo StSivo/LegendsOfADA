@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe9b04afb11349bcb9e06a43db63988, type: 3}
+  m_Name: Santo
+  m_EditorClassIdentifier: 
+  cardName: Santo
+  cardFaction: Process
+  cardType: Mentor
+  actionDescription: 
+  cardLore: 
+  codingValue: 1
+  designValue: 2
+  researchValue: 3
+  manaCost: 5
+  processValue: 2
+  characterSprite: {fileID: 21300000, guid: bef28de98ec5a4a90b9bb3475f8e3a86, type: 3}
+  factionSprite: {fileID: 21300000, guid: 1ced8b546b4c148aea5a91882f921a89, type: 3}
